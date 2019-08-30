@@ -5,8 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Category.destroy_all
+Task.destroy_all
+Email.destroy_all
 
 require 'faker'
+
+
 3.times do
   my_category = Category.create(title: Faker::Book.genre)
   3.times do
@@ -16,4 +21,9 @@ require 'faker'
     my_task.category = my_category
     my_task.save
   end
+end
+
+10.times do
+	Email.create(object: Faker::Music.album,
+						body: Faker::Movie.quote, read: false)
 end

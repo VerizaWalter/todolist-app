@@ -5,13 +5,21 @@
   <% @categories.each do  |category|%>
   <li><%= category.title  %></li>
   <div class="card">
-    <ul>
+    <ul id="<%=category.title.split.join%>">
       <% category.tasks.each do |task|  %>
-      <li>
+      <%if task.status == true%>
+        <li id="<%=task.id%>" class = "text-barre">
+      <%else%>
+        <li id="<%=task.id%>" >
+      <%end%>
+      
+         <%= check_box_tag :statvalue, 1, task.status , data: { remote: true, url: "/tasks/#{task.id}", params: { id: task.id, status: task.status }.to_param, method: "put" }%>
+
         <%= task.title  %>
         <% unless task.deadline.nil? %>
-          , to read: <%= task.deadline.strftime('%D')  %>
+          , to read: <%= task.deadline.strftime('%D')  %> 
         <% end %>
+        <a href="/tasks/<%=task.id%>" data-method="delete" class="fa fa-trash-o" data-remote="true" data-confirm="mandona"></a>
       </li>
       <% end %>
     </ul>
@@ -31,3 +39,4 @@
     <% end %>
   </div>
 </div>
+
